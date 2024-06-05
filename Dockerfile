@@ -3,7 +3,7 @@ FROM node:20-slim AS web-builder
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-COPY web /app
+COPY . /app
 WORKDIR /app
 
 FROM web-builder AS web-builder-deps

@@ -38,4 +38,8 @@
 	.customerActionRequired {
 		background-color: lightcoral;
 	}
+
+	.failed {
+		background-color: lightcoral;
+	}
 </style>

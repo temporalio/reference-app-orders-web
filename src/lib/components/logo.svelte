@@ -45,8 +45,8 @@
 		text-anchor: middle;
 		paint-order: stroke fill;
 		stroke: #000;
-		stroke-width: 16px;
-		letter-spacing: -10px;
+		stroke-width: 12px;
+		letter-spacing: -8px;
 		font-weight: 600;
 		text-transform: uppercase;
 	}

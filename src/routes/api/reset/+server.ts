@@ -6,7 +6,6 @@ export const POST: RequestHandler = async () => {
 		const response = await fetch(`${env.FRAUD_API_URL}/reset`, {
 			method: 'POST'
 		});
-		console.log('Reseting...');
 		return json({ status: 'ok', body: response });
 	} catch (e) {
 		return json({ status: 'error' });

@@ -4,10 +4,6 @@
 	import OrderActions from '$lib/components/order-actions.svelte';
 
 	$: ({ order } = $page.data);
-
-	$: {
-		console.log('ORDER: ', order);
-	}
 </script>
 
 <section>

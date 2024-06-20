@@ -24,6 +24,10 @@
 				<td><a href="/shipments">Courier</a></td>
 				<td>Someone who delivers products to the customer</td>
 			</tr>
+			<tr>
+				<td><a href="/admin">Store Manager</a></td>
+				<td>Someone who performs administrative functions</td>
+			</tr>
 		</tbody>
 	</table>
 

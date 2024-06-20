@@ -1,7 +1,7 @@
 # OMS Web Interface
 
 This repository contains the web application corresponding to the Order Management System reference 
-application, code for which is found in the [https://github.com/temporalio/reference-app-orders-go](reference-app-orders-go) 
+application, code for which is found in the [reference-app-orders-go](https://github.com/temporalio/reference-app-orders-go)
 repository. To run this application, you will need code from both repositories. 
 
 ## Running locally

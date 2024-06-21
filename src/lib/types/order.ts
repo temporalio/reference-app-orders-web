@@ -14,6 +14,7 @@ export type OrderStatus =
 	| 'processing'
 	| 'customerActionRequired'
 	| 'completed'
+	| 'failed'
 	| 'cancelled';
 
 export interface Order {

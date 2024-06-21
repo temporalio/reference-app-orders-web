@@ -6,7 +6,7 @@
 
 	export let order: Order;
 
-	$: fulfillments = order?.fulfillments?.filter((f) => f.status != 'cancelled') || [];
+	$: fulfillments = order?.fulfillments || [];
 
 	$: getStatus = (fulfillment: Fulfillment) => {
 		if (!fulfillment.shipment) return fulfillment.status;
@@ -21,6 +21,8 @@
 				<p class="location">
 					{#if fulfillment?.location}
 						<i>{fulfillment.location}</i>
+					{:else if fulfillment?.status == "cancelled"}
+						<strong>Unavailable</strong>
 					{:else}
 						<strong>Action Required</strong>
 					{/if}

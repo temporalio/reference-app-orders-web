@@ -9,7 +9,7 @@
 		});
 	}
 
-	const inactiveStatuses = ['pending', 'unavailable'];
+	const inactiveStatuses = ['pending', 'unavailable', 'cancelled'];
 	const activeStatuses = ['booked', 'dispatched', 'delivered'];
 
 	$: finalStatus = status || 'pending';
@@ -26,6 +26,7 @@
 			class:incomplete={!inactive && currentIndex < index}
 			class:pending={s === 'pending'}
 			class:unavailable={s === 'unavailable'}
+			class:cancelled={s === 'cancelled'}
 		>
 			{s.toUpperCase()}
 		</li>
@@ -85,7 +86,8 @@
 	}
 
 	li.incomplete::before,
-	li.unavailable::before {
+	li.unavailable::before,
+	li.cancelled::before {
 		background: lightcoral;
 	}
 

@@ -9,7 +9,7 @@
 		});
 	}
 
-	const inactiveStatuses = ['pending', 'unavailable', 'cancelled'];
+	const inactiveStatuses = ['pending', 'unavailable', 'cancelled', 'failed'];
 	const activeStatuses = ['booked', 'dispatched', 'delivered'];
 
 	$: finalStatus = status || 'pending';
@@ -24,6 +24,7 @@
 			class:active={!inactive && currentIndex === index}
 			class:completed={!inactive && currentIndex > index}
 			class:incomplete={!inactive && currentIndex < index}
+			class:failed={s === 'failed'}
 			class:pending={s === 'pending'}
 			class:unavailable={s === 'unavailable'}
 			class:cancelled={s === 'cancelled'}
@@ -87,7 +88,8 @@
 
 	li.incomplete::before,
 	li.unavailable::before,
-	li.cancelled::before {
+	li.cancelled::before,
+	li.failed::before {
 		background: lightcoral;
 	}
 

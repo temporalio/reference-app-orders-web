@@ -11,6 +11,18 @@
 	$: {
 		if (shipment?.id) {
 			broadcaster = new BroadcastChannel(`shipment-${shipment.id}`);
+
+			//note: the customer order page is polling for order status from the
+			//workflow itself since this courier shipping page is not the only
+			//source of workflow state changes
+			
+			//however to avoid polling on this this courier shipping page if
+			//multiple browser windows are open to the same shipping page we'd
+			//like those to be in sync, so will listen for events from a
+			//different browser window opened to the same shipping page
+			broadcaster?.addEventListener('message', (event) => {
+				status = event.data;
+			});
 		}
 	}
 

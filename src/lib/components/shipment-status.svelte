@@ -2,13 +2,6 @@
 	export let id: string | undefined = undefined;
 	export let status = '';
 
-	if (id) {
-		const broadcaster = new BroadcastChannel(`shipment-${id}`);
-		broadcaster?.addEventListener('message', (event) => {
-			status = event.data;
-		});
-	}
-
 	const inactiveStatuses = ['pending', 'unavailable', 'cancelled', 'failed'];
 	const activeStatuses = ['booked', 'dispatched', 'delivered'];
 

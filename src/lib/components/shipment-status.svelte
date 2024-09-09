@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let id: string | undefined = undefined;
+	export const id: string | undefined = undefined;
 	export let status = '';
 
 	const inactiveStatuses = ['pending', 'unavailable', 'cancelled', 'failed'];

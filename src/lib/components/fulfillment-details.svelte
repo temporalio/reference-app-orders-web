@@ -27,7 +27,7 @@
 						<strong>Action Required</strong>
 					{/if}
 				</p>
-				<ShipmentStatus id={fulfillment?.shipment?.id} status={getStatus(fulfillment)} />
+				<ShipmentStatus status={getStatus(fulfillment)} />
 			</div>
 			<ItemDetails items={fulfillment.items} />
 			{#if fulfillment.payment}

@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 
 	export let data;
 
 	$: ({ limit, maintenanceMode } = data);
 
 	$: newLimit = limit || 0;
-	let promotion = 0;
 
 	const onReset = async () => {
 		await fetch('/api/reset', { method: 'POST' });

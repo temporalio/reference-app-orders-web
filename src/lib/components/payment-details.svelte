@@ -5,56 +5,35 @@
 	export let payment: Payment;
 </script>
 
-<div class="container">
-	<div class="row">
-		<p class="label">Payment</p>
-		<StatusBadge status={payment.status} />
+<div class="flex flex-col gap-2 mt-4 p-2 rounded bg-gray-200 w-full">
+	<div class="flex justify-between">
+		<p class="">Payment</p>
+		<div class="text-right">
+			<StatusBadge status={payment.status} />
+		</div>
 	</div>
-	<div class="row">
-		<p class="label">Subtotal</p>
-		<p class="value">
+	<div class="flex justify-between">
+		<p class="">Subtotal</p>
+		<p class="text-right pr-2">
 			{(payment.subTotal / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
 		</p>
 	</div>
-	<div class="row">
-		<p class="label">Tax</p>
-		<p class="value">
+	<div class="flex justify-between">
+		<p class="">Tax</p>
+		<p class="text-right pr-2">
 			{(payment.tax / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
 		</p>
 	</div>
-	<div class="row" style="border-bottom: 2px solid black;">
-		<p class="label">Shipping</p>
-		<p class="value">
+	<div class="flex justify-between">
+		<p class="">Shipping</p>
+		<p class="text-right pr-2">
 			{(payment.shipping / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
 		</p>
 	</div>
-	<div class="row">
-		<p class="label">Total</p>
-		<p class="value">
+	<div class="flex justify-between border-t-2 border-black">
+		<p class=" font-bold">Total</p>
+		<p class="font-bold text-right pr-2">
 			{(payment.total / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
 		</p>
 	</div>
 </div>
-
-<style>
-	.container {
-		margin-top: 1rem;
-		padding: 0.55rem;
-		background-color: var(--color-bg-2);
-		border-radius: 0.15rem;
-	}
-	.row {
-		display: flex;
-	}
-
-	.label {
-		width: 240px;
-		font-weight: 700;
-	}
-
-	.value {
-		width: 100%;
-		text-align: right;
-		padding-right: 0.15rem;
-	}
-</style>

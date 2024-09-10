@@ -26,22 +26,17 @@
 	{/each}
 </ul>
 
-<style>
+<style lang="postcss">
 	ul {
-		position: relative;
 		list-style: none;
 		display: inline-flex;
-		border: 3px solid black;
-		border-radius: 9999px;
-		overflow: hidden;
+		@apply px-4 relative overflow-hidden rounded-full border-[3px] border-black my-2;
 	}
 
 	li {
-		padding: 0.75em 1.5em;
-		position: relative;
+		@apply px-4 py-2 text-sm font-bold relative;
 		background: transparent;
 		z-index: 1;
-		font-weight: 700;
 	}
 
 	li::before {
@@ -79,7 +74,10 @@
 	}
 
 	li.incomplete::before,
-	li.unavailable::before,
+	li.unavailable::before {
+		background: lightgoldenrodyellow;
+	}
+
 	li.cancelled::before,
 	li.failed::before {
 		background: lightcoral;
@@ -94,7 +92,7 @@
 	li:last-child {
 		/* extend the last item rightward to fill the rest of the space */
 		margin-right: -2rem;
-		padding-right: 4rem;
+		padding-right: 2rem;
 	}
 
 	@media (max-width: 640px) {
@@ -105,14 +103,14 @@
 
 		li:first-child {
 			/* extend the first item leftward to fill the rest of the space */
-			margin-left: -3rem;
+			margin-left: -2rem;
 			padding-left: 2rem;
 		}
 
 		li:last-child {
 			/* extend the last item rightward to fill the rest of the space */
 			margin-right: -2rem;
-			padding-right: 3rem;
+			padding-right: 2rem;
 		}
 	}
 </style>

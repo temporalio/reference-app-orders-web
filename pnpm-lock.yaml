@@ -23,9 +23,15 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^3.0.0
         version: 3.0.0(svelte@4.2.19)(vite@5.4.12)
+      chart.js:
+        specifier: ^4.4.8
+        version: 4.4.8
       svelte:
         specifier: ^4.2.19
         version: 4.2.19
+      svelte-chartjs:
+        specifier: ^3.1.5
+        version: 3.1.5(chart.js@4.4.8)(svelte@4.2.19)
       vite:
         specifier: ^5.4.12
         version: 5.4.12
@@ -276,6 +282,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@kurkle/color@0.3.4':
+    resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
 
   '@neoconfetti/svelte@1.0.0':
     resolution: {integrity: sha512-SmksyaJAdSlMa9cTidVSIqYo1qti+WTsviNDwgjNVm+KQ3DRP2Df9umDIzC4vCcpEYY+chQe0i2IKnLw03AT8Q==}
@@ -738,6 +747,10 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
+
+  chart.js@4.4.8:
+    resolution: {integrity: sha512-IkGZlVpXP+83QpMm4uxEiGqSI7jFizwVtF3+n5Pc3k7sMO+tkd0qxh2OzLhenM0K80xtmAONWGBn082EiBQSDA==}
+    engines: {pnpm: '>=8'}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -1497,6 +1510,12 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
+  svelte-chartjs@3.1.5:
+    resolution: {integrity: sha512-ka2zh7v5FiwfAX1oMflZ0HkNkgjHjFqANgRyC+vNYXfxtx2ku68Zo+2KgbKeBH2nS1ThDqkIACPzGxy4T0UaoA==}
+    peerDependencies:
+      chart.js: ^3.5.0 || ^4.0.0
+      svelte: ^4.0.0
+
   svelte-check@3.6.0:
     resolution: {integrity: sha512-8VfqhfuRJ1sKW+o8isH2kPi0RhjXH1nNsIbCFGyoUHG+ZxVxHYRKcb+S8eaL/1tyj3VGvWYx3Y5+oCUsJgnzcw==}
     hasBin: true
@@ -1839,6 +1858,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@kurkle/color@0.3.4': {}
 
   '@neoconfetti/svelte@1.0.0': {}
 
@@ -2252,6 +2273,10 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  chart.js@4.4.8:
+    dependencies:
+      '@kurkle/color': 0.3.4
 
   chokidar@3.6.0:
     dependencies:
@@ -3032,6 +3057,11 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  svelte-chartjs@3.1.5(chart.js@4.4.8)(svelte@4.2.19):
+    dependencies:
+      chart.js: 4.4.8
+      svelte: 4.2.19
 
   svelte-check@3.6.0(postcss-load-config@4.0.2(postcss@8.4.45))(postcss@8.4.45)(svelte@4.2.19):
     dependencies:

@@ -28,6 +28,9 @@
 				<td><a href="/admin">Store Manager</a></td>
 				<td>Someone who performs administrative functions</td>
 			</tr>
+			<tr>
+				<td><a href="/operator">Operator</a></td>
+				<td>Someone who manages deployments and tests the system's performance</td>
 		</tbody>
 	</table>
 

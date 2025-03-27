@@ -65,12 +65,10 @@ class LoadGenerator {
 
   private async pollShipments() {
     try {
-      const response = await fetch(`${env.SHIPMENT_API_URL}/shipments`);
+      const response = await fetch(`${env.SHIPMENT_API_URL}/shipments/pending`);
       const shipments = await response.json();
 
       for (const shipment of shipments) {
-        if (shipment.status === 'completed') continue;
-
         var next = "";
 
         if (shipment.status === 'booked') {

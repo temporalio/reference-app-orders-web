@@ -4,11 +4,11 @@ import { env } from '$env/dynamic/private';
 class LoadGenerator {
   private running: boolean = false;
   private orderInterval: number | null = null;
-  private pollInterval: number | null = null;
+  private pollTimeoutID: number | null = null;
 
   private config = {
     ordersPerSecond: 1,
-    pollFrequency: 500, // How often to poll shipments (ms)
+    pollFrequency: 500, // How long to wait between shipment polls (ms)
   };
 
   public start(config?: Partial<typeof this.config>) {
@@ -21,7 +21,7 @@ class LoadGenerator {
 
     const orderDelay = 1000 / this.config.ordersPerSecond;
     this.orderInterval = setInterval(() => this.createOrder(), orderDelay);
-    this.pollInterval = setInterval(() => this.pollShipments(), this.config.pollFrequency);
+    this.scheduleNextPoll();
 
     console.log('Load generator started');
   }
@@ -43,9 +43,9 @@ class LoadGenerator {
       clearInterval(this.orderInterval);
       this.orderInterval = null;
     }
-    if (this.pollInterval) {
-      clearInterval(this.pollInterval);
-      this.pollInterval = null;
+    if (this.pollTimeoutID) {
+      clearInterval(this.pollTimeoutID);
+      this.pollTimeoutID = null;
     }
 
     console.log('Load generator stopped');
@@ -63,33 +63,39 @@ class LoadGenerator {
     }
   }
 
+  private scheduleNextPoll() {
+    if (!this.running) return;
+
+    this.pollTimeoutID = setTimeout(() => {
+      this.pollShipments()
+        .catch(error => console.error('Error in pollShipments:', error))
+        .finally(() => this.scheduleNextPoll());
+    }, this.config.pollFrequency);
+  }
+
   private async pollShipments() {
-    try {
-      const response = await fetch(`${env.SHIPMENT_API_URL}/shipments/pending`);
-      const shipments = await response.json();
+    const response = await fetch(`${env.SHIPMENT_API_URL}/shipments/pending`);
+    const shipments = await response.json();
 
-      for (const shipment of shipments) {
-        var next = "";
+    for (const shipment of shipments) {
+      var next = "";
 
-        if (shipment.status === 'booked') {
-          next = 'dispatched';
-        } else if (shipment.status === 'dispatched') {
-          next = 'delivered';
-        }
+      if (shipment.status === 'booked') {
+        next = 'dispatched';
+      } else if (shipment.status === 'dispatched') {
+        next = 'delivered';
+      }
 
-        if (next != '') {
-          try {
-            await fetch(`${env.SHIPMENT_API_URL}/shipments/${shipment.id}/status`, {
-              method: 'POST',
-              body: JSON.stringify({ status: next }),
-            });
-          } catch (error) {
-            console.error('Failed to update shipment status:', error);
-          }
+      if (next != '') {
+        try {
+          await fetch(`${env.SHIPMENT_API_URL}/shipments/${shipment.id}/status`, {
+            method: 'POST',
+            body: JSON.stringify({ status: next }),
+          });
+        } catch (error) {
+          console.error('Failed to update shipment status:', error);
         }
       }
-    } catch (error) {
-      console.error('Failed to poll shipments:', error);
     }
   }
 }

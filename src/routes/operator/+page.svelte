@@ -108,26 +108,20 @@
 		completeChartData.labels = [...completeChartData.labels.slice(-20), now];
 		backlogChartData.labels = [...backlogChartData.labels.slice(-20), now];
 
-		let response = await fetch('/api/order/stats');
-		let { workerCount, completeRate, backlog } = await response.json();
+		const responses = await Promise.all([
+			fetch('/api/order/stats'),
+			fetch('/api/shipment/stats'),
+			fetch('/api/charge/stats')
+		]);
 
-		workerCountChartData.datasets[0].data = [...workerCountChartData.datasets[0].data.slice(-20), workerCount];
-		completeChartData.datasets[0].data = [...completeChartData.datasets[0].data.slice(-20), completeRate];
-		backlogChartData.datasets[0].data = [...backlogChartData.datasets[0].data.slice(-20), backlog];
+		const allStats = await Promise.all(responses.map(response => response.json()));
 
-		response = await fetch('/api/shipment/stats');
-		({ workerCount, completeRate, backlog } = await response.json());
-
-		workerCountChartData.datasets[1].data = [...workerCountChartData.datasets[1].data.slice(-20), workerCount];
-		completeChartData.datasets[1].data = [...completeChartData.datasets[1].data.slice(-20), completeRate];
-		backlogChartData.datasets[1].data = [...backlogChartData.datasets[1].data.slice(-20), backlog];
-
-		response = await fetch('/api/charge/stats');
-		({ workerCount, completeRate, backlog } = await response.json());
-
-		workerCountChartData.datasets[2].data = [...workerCountChartData.datasets[2].data.slice(-20), workerCount];
-		completeChartData.datasets[2].data = [...completeChartData.datasets[2].data.slice(-20), completeRate];
-		backlogChartData.datasets[2].data = [...backlogChartData.datasets[2].data.slice(-20), backlog];
+		allStats.forEach((stats, i) => {
+			let { workerCount, completeRate, backlog } = stats;
+			workerCountChartData.datasets[i].data = [...workerCountChartData.datasets[i].data.slice(-20), workerCount];
+			completeChartData.datasets[i].data = [...completeChartData.datasets[i].data.slice(-20), completeRate];
+			backlogChartData.datasets[i].data = [...backlogChartData.datasets[i].data.slice(-20), backlog];
+		});
 
 		workerCountChartData = workerCountChartData
 		completeChartData = completeChartData

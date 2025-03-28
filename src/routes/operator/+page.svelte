@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { Line } from 'svelte-chartjs';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import {
 		Chart as ChartJS,
 		CategoryScale,
@@ -27,43 +27,111 @@
 
 	$: ({ running, config } = data);
 
-	let completeChartData = {
-		labels: [],
+	let workerCountChartData = {
+		labels: [] as string[],
 		datasets: [
 			{
-				label: 'Order Complete RPS',
-				data: [],
+				label: 'Order',
+				data: [] as number[],
 				borderColor: 'green',
 				tension: 0.1
 			},
+			{
+				label: 'Shipment',
+				data: [] as number[],
+				borderColor: 'blue',
+				tension: 0.1
+			},
+			{
+				label: 'Charge',
+				data: [] as number[],
+				borderColor: 'orange',
+				tension: 0.1
+			}
+		]
+	}
+
+	let completeChartData = {
+		labels: [] as string[],
+		datasets: [
+			{
+				label: 'Order',
+				data: [] as number[],
+				borderColor: 'green',
+				tension: 0.1
+			},
+			{
+				label: 'Shipment',
+				data: [] as number[],
+				borderColor: 'blue',
+				tension: 0.1
+			},
+			{
+				label: 'Charge',
+				data: [] as number[],
+				borderColor: 'orange',
+				tension: 0.1
+			}
 		]
 	};
 
 	let backlogChartData = {
-		labels: [],
+		labels: [] as string[],
 		datasets: [
 			{
-				label: 'Order Backlog',
-				data: [],
-				borderColor: 'red',
+				label: 'Order',
+				data: [] as number[],
+				borderColor: 'green',
 				tension: 0.1
 			},
+			{
+				label: 'Shipment',
+				data: [] as number[],
+				borderColor: 'blue',
+				tension: 0.1
+			},
+			{
+				label: 'Charge',
+				data: [] as number[],
+				borderColor: 'orange',
+				tension: 0.1
+			}
 		]
 	};
 
 	let refreshInterval: number;
 
 	const updateChartData = async() => {
-		const response = await fetch('/api/order/stats');
-		const { completeRate, backlog } = await response.json();
-
 		const now = new Date().toLocaleTimeString();
 
+		workerCountChartData.labels = [...workerCountChartData.labels.slice(-20), now];
 		completeChartData.labels = [...completeChartData.labels.slice(-20), now];
 		backlogChartData.labels = [...backlogChartData.labels.slice(-20), now];
+
+		let response = await fetch('/api/order/stats');
+		let { workerCount, completeRate, backlog } = await response.json();
+
+		workerCountChartData.datasets[0].data = [...workerCountChartData.datasets[0].data.slice(-20), workerCount];
 		completeChartData.datasets[0].data = [...completeChartData.datasets[0].data.slice(-20), completeRate];
 		backlogChartData.datasets[0].data = [...backlogChartData.datasets[0].data.slice(-20), backlog];
-		chartData = chartData; // trigger reactivity
+
+		response = await fetch('/api/shipment/stats');
+		({ workerCount, completeRate, backlog } = await response.json());
+
+		workerCountChartData.datasets[1].data = [...workerCountChartData.datasets[1].data.slice(-20), workerCount];
+		completeChartData.datasets[1].data = [...completeChartData.datasets[1].data.slice(-20), completeRate];
+		backlogChartData.datasets[1].data = [...backlogChartData.datasets[1].data.slice(-20), backlog];
+
+		response = await fetch('/api/charge/stats');
+		({ workerCount, completeRate, backlog } = await response.json());
+
+		workerCountChartData.datasets[2].data = [...workerCountChartData.datasets[2].data.slice(-20), workerCount];
+		completeChartData.datasets[2].data = [...completeChartData.datasets[2].data.slice(-20), completeRate];
+		backlogChartData.datasets[2].data = [...backlogChartData.datasets[2].data.slice(-20), backlog];
+
+		workerCountChartData = workerCountChartData
+		completeChartData = completeChartData
+		backlogChartData = backlogChartData
 	}
 
 	onMount(() => {
@@ -113,7 +181,7 @@
 	</div>
 	<div class="flex gap-2 w-full">
 		<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
-			<h3 class="text-xl font-bold">Order Completions</h3>
+			<h3 class="text-xl font-bold">Completions</h3>
 			<div class="w-full h-[300px]">
 				<Line 
 						data={completeChartData}
@@ -130,8 +198,28 @@
 					/>
 				</div>
 			</div>
+		</div>
+		<div class="flex gap-2 w-full">
 			<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
-				<h3 class="text-xl font-bold">Order Backlog</h3>
+				<h3 class="text-xl font-bold">Workers</h3>
+				<div class="w-full h-[300px]">
+					<Line
+							data={workerCountChartData}
+							options={{
+									responsive: true,
+									maintainAspectRatio: false,
+									animation: false,
+									scales: {
+										y: {
+											beginAtZero: true
+										}
+									}
+							}}
+					/>
+				</div>
+			</div>	
+			<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
+				<h3 class="text-xl font-bold">Backlog</h3>
 				<div class="w-full h-[300px]">
 					<Line 
 					data={backlogChartData}

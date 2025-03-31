@@ -60,18 +60,6 @@
 				borderColor: 'green',
 				tension: 0.1
 			},
-			{
-				label: 'Shipment',
-				data: [] as number[],
-				borderColor: 'blue',
-				tension: 0.1
-			},
-			{
-				label: 'Charge',
-				data: [] as number[],
-				borderColor: 'orange',
-				tension: 0.1
-			}
 		]
 	};
 
@@ -118,8 +106,10 @@
 
 		allStats.forEach((stats, i) => {
 			let { workerCount, completeRate, backlog } = stats;
+			if (completeRate != undefined) {
+				completeChartData.datasets[i].data = [...completeChartData.datasets[i].data.slice(-20), completeRate];
+			}
 			workerCountChartData.datasets[i].data = [...workerCountChartData.datasets[i].data.slice(-20), workerCount];
-			completeChartData.datasets[i].data = [...completeChartData.datasets[i].data.slice(-20), completeRate];
 			backlogChartData.datasets[i].data = [...backlogChartData.datasets[i].data.slice(-20), backlog];
 		});
 

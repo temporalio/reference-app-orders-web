@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 	import Link from '$lib/components/Link.svelte';
-	import StatusBadge from '$lib/components/status-badge.svelte';
+	import StatusBadge from '$lib/components/StatusBadge.svelte';
 	import TableWithHeader from '$lib/components/TableWithHeader.svelte';
 
 	let { data } = $props();

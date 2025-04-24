@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { generateOrders, type Item, type Order, type OrderItem } from '$lib/types/order';
-	import Logo from '$lib/components/logo.svelte';
+	import { generateOrders, type Order, type OrderItem } from '$lib/types/order';
+	import Logo from '$lib/components/Logo.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';

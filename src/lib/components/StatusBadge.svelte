@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	let { status } = $props();
 
 	const capitalize = (word?: string): string => {

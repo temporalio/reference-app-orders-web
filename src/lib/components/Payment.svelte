@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Payment } from '$lib/types/order';
-	import StatusBadge from './status-badge.svelte';
+	import StatusBadge from './StatusBadge.svelte';
 
 	let { payment }: { payment: Payment } = $props();
 </script>
@@ -18,12 +18,16 @@
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.subTotal / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
 			</tr>
 			<tr>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Tax</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.tax / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+			</tr>
+			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Shipping</td>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.shipping / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
 			</tr>
 			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Total</td>
-				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.total / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right font-bold">{(payment.total / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
 			</tr>
 	</tbody>
 </table>

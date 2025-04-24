@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { type Fulfillment, type Order } from '$lib/types/order';
 	import ItemDetails from './ItemDetails.svelte';
-	import PaymentDetails from './payment-details.svelte';
-	import ShipmentStatus from './shipment-status.svelte';
+	import Payment from './Payment.svelte';
+	import ShipmentProgress from './ShipmentProgress.svelte';
 
 	let { order }: { order: Order } = $props();
 	let fulfillments: Fulfillment[] = $derived(order?.fulfillments || []);
@@ -26,12 +26,12 @@
 						<strong>Action Required</strong>
 					{/if}
 				</p>
-				<ShipmentStatus status={getStatus(fulfillment)} />
+				<ShipmentProgress status={getStatus(fulfillment)} />
 			</div>
 			<div class="w-full flex flex-col md:flex-row items-start justify-between gap-2 my-4 items-center">
 				<ItemDetails items={fulfillment.items} />
 				{#if fulfillment.payment}
-					<PaymentDetails payment={fulfillment.payment} />
+					<Payment payment={fulfillment.payment} />
 				{/if}
 			</div>
 		</div>

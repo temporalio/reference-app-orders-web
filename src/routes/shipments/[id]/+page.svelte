@@ -3,7 +3,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import Heading from '$lib/components/Heading.svelte';
 	import ItemDetails from '$lib/components/ItemDetails.svelte';
-	import ShipmentStatus from '$lib/components/shipment-status.svelte';
+	import ShipmentProgress from '$lib/components/ShipmentProgress.svelte';
 	import type { Shipment } from '$lib/types/order';
 
 	let { data } = $props();
@@ -39,7 +39,7 @@
 	<div class="w-full">
 		<div class="flex flex-col md:flex-row items-center justify-between gap-2 w-full">
 			<Heading>{shipment.id}</Heading>
-			<ShipmentStatus {status} />
+			<ShipmentProgress {status} />
 		</div>
 		<ItemDetails items={shipment.items} />
 	</div>

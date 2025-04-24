@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto, invalidate } from '$app/navigation';
-	import FulfillmentDetails from '$lib/components/fulfillment-details.svelte';
+	import Fulfillment from '$lib/components/Fullfillment.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import Logo from '$lib/components/logo.svelte';
+	import Logo from '$lib/components/Logo.svelte';
 	import { page } from '$app/state';
 	import type { Action } from '$lib/types/order';
 	import Card from '$lib/components/Card.svelte';
@@ -50,7 +50,7 @@
 <Card>
 	<div class="w-full flex flex-col gap-2">
 		<Heading>{id}</Heading>
-		<FulfillmentDetails {order} />	
+		<Fulfillment {order} />	
 	</div>
 	{#snippet actionButtons()}
 		{#if actionRequired}

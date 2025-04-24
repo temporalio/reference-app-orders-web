@@ -2,38 +2,28 @@
 	import type { Payment } from '$lib/types/order';
 	import StatusBadge from './status-badge.svelte';
 
-	export let payment: Payment;
+	let { payment }: { payment: Payment } = $props();
 </script>
 
-<div class="flex flex-col gap-2 mt-4 p-2 rounded bg-gray-200 w-full">
-	<div class="flex justify-between">
-		<p class="">Payment</p>
-		<div class="text-right">
-			<StatusBadge status={payment.status} />
-		</div>
-	</div>
-	<div class="flex justify-between">
-		<p class="">Subtotal</p>
-		<p class="text-right pr-2">
-			{(payment.subTotal / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
-		</p>
-	</div>
-	<div class="flex justify-between">
-		<p class="">Tax</p>
-		<p class="text-right pr-2">
-			{(payment.tax / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
-		</p>
-	</div>
-	<div class="flex justify-between">
-		<p class="">Shipping</p>
-		<p class="text-right pr-2">
-			{(payment.shipping / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
-		</p>
-	</div>
-	<div class="flex justify-between border-t-2 border-black">
-		<p class=" font-bold">Total</p>
-		<p class="font-bold text-right pr-2">
-			{(payment.total / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
-		</p>
-	</div>
-</div>
+<table class="w-full divide-y divide-gray-600">
+	<thead>
+	</thead>
+	<tbody class="divide-y divide-gray-200 bg-gray-100/50">
+			<tr>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Payment</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700"><StatusBadge status={payment.status} /></td>
+			</tr>
+			<tr>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Subtotal</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.subTotal / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+			</tr>
+			<tr>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Shipping</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.shipping / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+			</tr>
+			<tr>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Total</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.total / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+			</tr>
+	</tbody>
+</table>

@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { generateOrders, type Item, type Order, type OrderItem } from '$lib/types/order';
 	import Logo from '$lib/components/logo.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 
 	const orders = generateOrders(20);
 	let order: Order = $state(orders[0]);
@@ -9,14 +11,6 @@
 
 	const onItemClick = async (item: Order) => {
 		order = item;
-	};
-
-	const onSubmit = async () => {
-		loading = true;
-		await fetch('/api/order', { method: 'POST', body: JSON.stringify({ order }) });
-		setTimeout(() => {
-			goto(`/orders/${order.id}`, { invalidateAll: true });
-		}, 1000);
 	};
 </script>
 
@@ -51,12 +45,26 @@
 					{@render orderButton(item, index)}
 				{/each}
 			</div>
-			<div class="w-full flex flex-col gap-2 px-2 items-end">
+			<form 
+				class="w-full flex flex-col gap-2 px-2 items-end"
+				method="POST" 
+				use:enhance={() => {
+					loading = true;
+					return async ({ result }) => {
+						if (result.type === 'redirect') {
+							goto(result.location);
+						} else {
+							loading = false;;
+						}
+					}
+				}}
+				>
 				{#each order.items as item}
 					{@render orderDetails(item)}
 				{/each}
-				<button class="w-48" disabled={!order} onclick={onSubmit}>Submit</button>
-			</div>		
+				<input type="hidden" name="order" value={JSON.stringify(order)} />
+				<Button type="submit" disabled={!order}>Submit</Button>
+			</form>
 		</div>
 	{/if}
 </section>

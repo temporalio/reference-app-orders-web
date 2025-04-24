@@ -1,24 +1,23 @@
 <script lang="ts">
 	import { type Fulfillment, type Order } from '$lib/types/order';
-	import ItemDetails from './item-details.svelte';
+	import ItemDetails from './ItemDetails.svelte';
 	import PaymentDetails from './payment-details.svelte';
 	import ShipmentStatus from './shipment-status.svelte';
 
-	export let order: Order;
+	let { order }: { order: Order } = $props();
+	let fulfillments: Fulfillment[] = $derived(order?.fulfillments || []);
 
-	$: fulfillments = order?.fulfillments || [];
-
-	$: getStatus = (fulfillment: Fulfillment) => {
+	const getStatus = (fulfillment: Fulfillment) => {
 		if (!fulfillment.shipment) return fulfillment.status;
 		return fulfillment.shipment.status;
 	};
 </script>
 
-<div class="details">
+<div class="flex flex-col gap-4 w-full items-start">
 	{#each fulfillments as fulfillment}
 		<div class="container">
-			<div class="fulfillment">
-				<p class="location">
+			<div class="flex flex-col md:flex-row items-end justify-between w-full border-b-2 mb-1">
+				<p>
 					{#if fulfillment?.location}
 						<i>{fulfillment.location}</i>
 					{:else if fulfillment?.status == "cancelled"}
@@ -29,48 +28,12 @@
 				</p>
 				<ShipmentStatus status={getStatus(fulfillment)} />
 			</div>
-			<ItemDetails items={fulfillment.items} />
-			{#if fulfillment.payment}
-				<PaymentDetails payment={fulfillment.payment} />
-			{/if}
+			<div class="w-full flex flex-col md:flex-row items-start justify-between gap-2 my-4 items-center">
+				<ItemDetails items={fulfillment.items} />
+				{#if fulfillment.payment}
+					<PaymentDetails payment={fulfillment.payment} />
+				{/if}
+			</div>
 		</div>
 	{/each}
 </div>
-
-<style>
-	.fulfillment {
-		display: flex;
-		align-items: end;
-		justify-content: space-between;
-		width: 100%;
-		border-bottom: 2px solid black;
-		margin-bottom: 1rem;
-	}
-
-	@media (max-width: 640px) {
-		.fulfillment {
-			flex-direction: column;
-		}
-	}
-
-	.container {
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-		justify-content: space-between;
-		width: 100%;
-		padding: 0.5rem;
-		border-radius: 0.15rem;
-	}
-	.location {
-		font-size: 1.5rem;
-	}
-
-	.details {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		width: 100%;
-		align-items: start;
-	}
-</style>

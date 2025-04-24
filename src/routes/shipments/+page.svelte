@@ -1,32 +1,32 @@
 <script lang="ts">
+	import Link from '$lib/components/Link.svelte';
+	import TableWithHeader from '$lib/components/TableWithHeader.svelte';
 	import StatusBadge from '$lib/components/status-badge.svelte';
 
-	export let data;
-
-	$: ({ shipments } = data);
+	let { data } = $props();
+	let shipments = $derived(data.shipments);
+	
+	const columns = [{
+		title: 'Shipment ID',
+		key: 'id',
+		formatter: (value: string) => ({
+				type: Link,
+				props: { value, href: `/shipments/${value}` }
+			}),
+		},
+		{
+			title: 'Status',
+			key: 'status',
+			formatter: (value: string) => ({
+				type: StatusBadge,
+				props: { status: value }
+			}),
+		}
+	]
 </script>
 
-<nav>
-	<h1>Shipments</h1>
-</nav>
-<table>
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th style="text-align: center;">Status</th>
-		</tr>
-	</thead>
-	<tbody>
-		{#each shipments as shipment}
-			<tr>
-				<td style="width: 100%;"><a href={`/shipments/${shipment.id}`}>{shipment.id}</a></td>
-				<td style="text-align: center;"><StatusBadge status={shipment.status} /></td>
-			</tr>
-		{:else}
-			<tr>
-				<td>No Active Shipments</td>
-				<td></td>
-			</tr>
-		{/each}
-	</tbody>
-</table>
+<TableWithHeader
+	title="Shipments"
+	{columns}
+	data={shipments}
+/>

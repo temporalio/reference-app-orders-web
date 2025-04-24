@@ -12,11 +12,11 @@
 </script>
 
 {#if !loading}
-	<svg width="400" height="150" viewBox="0 0 400 150">
-		<a href="/"><text fill={statusColor} x="120" y="100">OMS</text></a>
+	<svg width="60" height="40" viewBox="0 0 120 60">
+		<a href="/"><text fill={statusColor} x="55" y="50">OMS</text></a>
 	</svg>
 {:else}
-	<svg width="400" height="150" viewBox="0 0 400 150">
+	<svg width="120" height="60" viewBox="0 0 200 60">
 		<radialGradient id="gradient" cx="50%" cy="50%" r="70%">
 			<animate attributeName="r" values="0%;150%;100%;0%" dur="1s" repeatCount="indefinite" />
 			<stop stop-color="#366ee9" offset="0">

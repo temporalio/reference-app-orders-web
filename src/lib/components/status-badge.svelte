@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let status: string;
+
+	let { status } = $props();
 
 	const capitalize = (word?: string): string => {
 		if (!word) return '';
@@ -13,28 +14,17 @@
 			.toUpperCase();
 	};
 
-	$: formattedStatus =
-		status === 'customerActionRequired'
+	const formattedStatus =
+		$derived(status === 'customerActionRequired'
 			? spaceBetweenCapitalLetters('actionRequired')
-			: spaceBetweenCapitalLetters(status);
+			: spaceBetweenCapitalLetters(status))
 </script>
 
-<div class="status {status}">
+<div class="border-2 text-black rounded-md px-4 max-w-fit py-0.5 mx-auto bg-green-300 text-sm whitespace-nowrap font-bold {status}">
 	{formattedStatus}
 </div>
 
 <style>
-	.status {
-		border: 2px solid black;
-		border-radius: 9999px;
-		padding: 0.25rem 1rem;
-		margin: 0 auto;
-		background-color: lightgreen;
-		font-size: 14px;
-		white-space: nowrap;
-		font-weight: 700;
-	}
-
 	.customerActionRequired {
 		background-color: lightcoral;
 	}

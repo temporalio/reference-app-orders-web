@@ -1,14 +1,21 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { invalidate } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import FulfillmentDetails from '$lib/components/fulfillment-details.svelte';
-	import OrderActions from '$lib/components/order-actions.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Logo from '$lib/components/logo.svelte';
+	import { page } from '$app/state';
+	import type { Action } from '$lib/types/order';
+	import Card from '$lib/components/Card.svelte';
+	import Heading from '$lib/components/Heading.svelte';
 
-	$: ({ order } = $page.data);
+	let { data } = $props();
+	let order = $derived(data.order);
+	let id = $derived(page.params.id);
+	let loading = $state(false);
 
 	onMount(() => {
-		const finalStatuses = ['completed', 'failed', 'cancelled'];
+		const finalStatuses = ['completed', 'failed', 'cancelled', 'timedOut'];
 
 		const interval = setInterval(() => {
 			const isFinal = finalStatuses.includes(order.status);
@@ -23,12 +30,38 @@
 			clearInterval(interval);
 		};
 	});
+
+	const sendAction = async (action: Action) => {
+		loading = true;
+		await fetch('/api/order-action', { method: 'POST', body: JSON.stringify({ id, action }) });
+		setTimeout(() => {
+			loading = false;
+			if (action === 'cancel') {
+				goto(`/orders`, { invalidateAll: true });
+			} else {
+				goto(`/orders/${id}`, { invalidateAll: true });
+			}
+		}, 1000);
+	};
+
+	const actionRequired = $derived(order.status === 'customerActionRequired');
 </script>
 
-<div class="flex flex-col bg-white p-8 rounded-lg shadow-md container">
-	<h1>{$page.params.id}</h1>
-	<FulfillmentDetails {order} />
-	{#if order.status === 'customerActionRequired'}
-		<OrderActions id={$page.params.id} />
-	{/if}
-</div>
+<Card>
+	<div class="w-full flex flex-col gap-2">
+		<Heading>{id}</Heading>
+		<FulfillmentDetails {order} />	
+	</div>
+	{#snippet actionButtons()}
+		{#if actionRequired}
+			<div class="flex items-center justify-end gap-2">
+				{#if loading}
+					<Logo loading loadingText="Processing" />
+				{:else}
+					<Button onClick={() => sendAction('amend')}>Amend</Button>
+					<Button onClick={() => sendAction('cancel')}>Cancel</Button>
+				{/if}
+			</div>
+		{/if}
+	{/snippet}
+</Card>

@@ -1,42 +1,48 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import Button from '$lib/components/Button.svelte';
+	import Link from '$lib/components/Link.svelte';
 	import StatusBadge from '$lib/components/status-badge.svelte';
+	import TableWithHeader from '$lib/components/TableWithHeader.svelte';
 
-	export let data;
+	let { data } = $props();
+	let orders = $derived(data.orders);
 
-	$: ({ orders } = data);
+	const columns = [{
+			title: 'Order ID',
+			key: 'id',
+			formatter: (value: string) => ({
+				type: Link,
+				props: { value, href: `/orders/${value}` }
+			}),
+		},
+		{
+			title: 'Date & Time',
+			key: 'receivedAt',
+			formatter: (value: string) => {
+				return `${new Date(value).toLocaleDateString()} ${new Date(value).toLocaleTimeString()}`;
+			},
+		},
+		{
+			title: 'Status',
+			key: 'status',
+			formatter: (value: string) => ({
+				type: StatusBadge,
+				props: { status: value }
+			}),
+		}
+	]
 </script>
 
-<div class="flex items-center justify-between gap-4 w-full">
-	<h1>Orders</h1>
-	<button on:click={() => goto('/orders/new')}>New Order</button>
-</div>
-<table>
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th style="text-align: center;">Date & Time</th>
-			<th style="text-align: center;">Status</th>
-		</tr>
-	</thead>
-	<tbody>
-		{#each orders as order}
-			<tr>
-				<td style="width: 100%;"><a href={`/orders/${order.id}`}>{order.id}</a></td>
-				<td style="text-align: center;"
-					><div style="width: 210px;">
-						{new Date(order.receivedAt).toLocaleDateString()}
-						{new Date(order.receivedAt).toLocaleTimeString()}
-					</div></td
-				>
-				<td style="text-align: center;"><StatusBadge status={order.status} /></td>
-			</tr>
-		{:else}
-			<tr>
-				<td>No Active Orders</td>
-				<td />
-				<td />
-			</tr>
-		{/each}
-	</tbody>
-</table>
+
+<TableWithHeader
+	title="Orders"
+	{columns}
+	data={orders}
+>
+ {#snippet action()}
+		<Button onClick={() => goto('/orders/new')}>
+			New Order
+		</Button>
+ {/snippet}
+</TableWithHeader>

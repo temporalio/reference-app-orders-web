@@ -27,6 +27,8 @@
 </ul>
 
 <style lang="postcss">
+	@reference "tailwindcss";
+
 	ul {
 		list-style: none;
 		display: inline-flex;

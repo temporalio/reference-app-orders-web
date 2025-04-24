@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import { Line } from 'svelte-chartjs';
+	// import { Line } from 'svelte-chartjs';
 	import { invalidateAll } from '$app/navigation';
 	import {
 		Chart as ChartJS,
@@ -167,7 +167,7 @@
 		<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
 			<h3 class="text-xl font-bold">Completions</h3>
 			<div class="w-full h-[300px]">
-				<Line 
+				<!-- <Line 
 						data={completeChartData}
 						options={{
 								responsive: true,
@@ -179,7 +179,7 @@
 									}
 								}
 						}}
-					/>
+					/> -->
 				</div>
 			</div>
 		</div>
@@ -187,7 +187,7 @@
 			<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
 				<h3 class="text-xl font-bold">Workers</h3>
 				<div class="w-full h-[300px]">
-					<Line
+					<!-- <Line
 							data={workerCountChartData}
 							options={{
 									responsive: true,
@@ -199,13 +199,13 @@
 										}
 									}
 							}}
-					/>
+					/> -->
 				</div>
 			</div>	
 			<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
 				<h3 class="text-xl font-bold">Backlog</h3>
 				<div class="w-full h-[300px]">
-					<Line 
+					<!-- <Line 
 					data={backlogChartData}
 					options={{
 							responsive: true,
@@ -217,7 +217,7 @@
 								}
 							}
 					}}
-				/>
+				/> -->
 			</div>
 		</div>
 	</div>

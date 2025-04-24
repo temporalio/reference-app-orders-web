@@ -15,19 +15,19 @@
 			</tr>
 			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Subtotal</td>
-				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.subTotal / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right font-mono">{(payment.subTotal / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
 			</tr>
 			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Tax</td>
-				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.tax / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right font-mono">{(payment.tax / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
 			</tr>
 			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Shipping</td>
-				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{(payment.shipping / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right font-mono">{(payment.shipping / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
 			</tr>
 			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Total</td>
-				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right font-bold">{(payment.total / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right font-mono font-bold">{(payment.total / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
 			</tr>
 	</tbody>
 </table>

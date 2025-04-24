@@ -16,7 +16,7 @@
 	<meta name="description" content="OMS App" />
 </svelte:head>
 
-<div class="relative flex flex-col min-h-screen">
+<div class="relative flex flex-col min-h-screen bg-gray-200/18 text-gray-900">
 	<header class="px-4 py-1 flex justify-end bg-gray-900/20">
 		<nav class="flex items-center justify-between w-full mx-auto h-[60px]">
 			<Breadcrumb {paths} />

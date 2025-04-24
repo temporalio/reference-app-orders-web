@@ -6,4 +6,4 @@
   let { value, href}: Props = $props();
 </script>
 
-<a href={href} class="text-blue-600 font-medium hover:underline">{value}</a>
+<a href={href} class="text-blue-600 font-mono hover:underline">{value}</a>

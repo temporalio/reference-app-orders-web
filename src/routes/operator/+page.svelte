@@ -146,67 +146,28 @@
   }
 </script>
 
-<div class="flex flex-col gap-4 items-center justify-start">
-	<h1>Operator</h1>
-	<div class="flex gap-2 w-full">
-		<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
-			<h3 class="text-xl font-bold">Load Testing</h3>
-			<p>
-				Orders per second: <strong>{config.ordersPerSecond}</strong>
-			</p>
-			<p>
-				Status: <strong>{running ? 'Running' : 'Stopped'}</strong>
-			</p>
-			<div class="flex items-center gap-2">
-				<input type="number" bind:value={config.ordersPerSecond} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
-				<button on:click={onToggle} class="w-full text-nowrap">{running ? 'Stop' : 'Start'}</button>
-			</div>
+<h1>Operator</h1>
+<div class="flex gap-2 w-full">
+	<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
+		<h3 class="text-xl font-bold">Load Testing</h3>
+		<p>
+			Orders per second: <strong>{config.ordersPerSecond}</strong>
+		</p>
+		<p>
+			Status: <strong>{running ? 'Running' : 'Stopped'}</strong>
+		</p>
+		<div class="flex items-center gap-2">
+			<input type="number" bind:value={config.ordersPerSecond} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+			<button on:click={onToggle} class="w-full text-nowrap">{running ? 'Stop' : 'Start'}</button>
 		</div>
 	</div>
-	<div class="flex gap-2 w-full">
-		<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
-			<h3 class="text-xl font-bold">Completions</h3>
-			<div class="w-full h-[300px]">
-				<!-- <Line 
-						data={completeChartData}
-						options={{
-								responsive: true,
-								maintainAspectRatio: false,
-								animation: false,
-								scales: {
-									y: {
-										beginAtZero: true
-									}
-								}
-						}}
-					/> -->
-				</div>
-			</div>
-		</div>
-		<div class="flex gap-2 w-full">
-			<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
-				<h3 class="text-xl font-bold">Workers</h3>
-				<div class="w-full h-[300px]">
-					<!-- <Line
-							data={workerCountChartData}
-							options={{
-									responsive: true,
-									maintainAspectRatio: false,
-									animation: false,
-									scales: {
-										y: {
-											beginAtZero: true
-										}
-									}
-							}}
-					/> -->
-				</div>
-			</div>	
-			<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
-				<h3 class="text-xl font-bold">Backlog</h3>
-				<div class="w-full h-[300px]">
-					<!-- <Line 
-					data={backlogChartData}
+</div>
+<div class="flex gap-2 w-full">
+	<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
+		<h3 class="text-xl font-bold">Completions</h3>
+		<div class="w-full h-[300px]">
+			<!-- <Line 
+					data={completeChartData}
 					options={{
 							responsive: true,
 							maintainAspectRatio: false,
@@ -219,6 +180,43 @@
 					}}
 				/> -->
 			</div>
+		</div>
+	</div>
+	<div class="flex gap-2 w-full">
+		<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
+			<h3 class="text-xl font-bold">Workers</h3>
+			<div class="w-full h-[300px]">
+				<!-- <Line
+						data={workerCountChartData}
+						options={{
+								responsive: true,
+								maintainAspectRatio: false,
+								animation: false,
+								scales: {
+									y: {
+										beginAtZero: true
+									}
+								}
+						}}
+				/> -->
+			</div>
+		</div>	
+		<div class="w-full p-4 flex flex-col gap-4 bg-white border border-black rounded">
+			<h3 class="text-xl font-bold">Backlog</h3>
+			<div class="w-full h-[300px]">
+				<!-- <Line 
+				data={backlogChartData}
+				options={{
+						responsive: true,
+						maintainAspectRatio: false,
+						animation: false,
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+				}}
+			/> -->
 		</div>
 	</div>
 </div>

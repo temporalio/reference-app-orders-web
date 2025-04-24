@@ -1,14 +1,8 @@
-<svelte:head>
-	<title>OMS</title>
-	<meta name="description" content="OMS App" />
-</svelte:head>
-
-<section>
-	<h1 style="text-align: left; margin-bottom: 20px;">
-		Begin by selecting your role:
+	<h1>
+		Select Your Role
 	</h1>
 
-	<table style="width: 60%;">
+	<table>
 		<thead>
 			<tr>
 				<th>Role</th>
@@ -33,5 +27,3 @@
 				<td>Someone who manages deployments and tests the system's performance</td>
 		</tbody>
 	</table>
-
-</section>

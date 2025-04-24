@@ -122,14 +122,6 @@ button:disabled {
 	cursor: not-allowed;
 }
 
-nav {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 2rem;
-	gap: 1rem;
-}
-
 table {
 	width: 100%;
 	border-collapse: separate;

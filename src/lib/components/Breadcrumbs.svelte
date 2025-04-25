@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { capitalize } from "$lib/utils/formatting";
-	import Logo from "./Logo.svelte";
+	import Logo from "$lib/components/OMSLogo.svelte";
 
   let { paths }: { paths: string[] } = $props();
 </script>

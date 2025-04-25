@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import { capitalize } from '$lib/utils/formatting';
 	import './app.css';
 
@@ -19,7 +19,7 @@
 <div class="relative flex flex-col min-h-screen bg-gray-200/18 text-gray-900">
 	<header class="px-4 py-1 flex justify-end bg-gray-900/20">
 		<nav class="flex items-center justify-between w-full mx-auto h-[60px]">
-			<Breadcrumb {paths} />
+			<Breadcrumbs {paths} />
 		</nav>
 	</header>
 	<main class="flex flex-col items-center justify-center p-4 w-full h-full">

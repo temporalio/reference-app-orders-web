@@ -10,6 +10,8 @@ The steps below minimally cover how to run and build the web application. See th
 [other repository](https://github.com/temporalio/reference-app-orders-go) 
 for detailed instructions on running and using the Order Management System. 
 
+Uses Svelte5 and Tailwind4
+
 
 ## Running the Web Application Locally
 

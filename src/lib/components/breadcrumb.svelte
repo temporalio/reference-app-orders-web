@@ -1,11 +1,8 @@
 <script lang="ts">
+	import { capitalize } from "$lib/utils/formatting";
 	import Logo from "./Logo.svelte";
 
   let { paths } = $props();
-
-  const capitalize = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
 </script>
 
 <nav class="flex" aria-label="Breadcrumb">
@@ -23,7 +20,7 @@
             <svg class="h-full w-6 shrink-0 text-gray-400" viewBox="0 0 24 44" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
               <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
             </svg>
-            <a href="/{fullPath}" class="ml-4 text-sm font-medium text-gray-200 hover:text-blue-500">{capitalize(path)}</a>
+            <a href="/{fullPath}" class="ml-4 text-sm font-medium text-gray-200 hover:text-blue-400">{capitalize(path)}</a>
           </li>
         {/if}
       {/each}

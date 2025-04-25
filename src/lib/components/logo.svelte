@@ -13,7 +13,7 @@
 
 {#if !loading}
 	<svg width="60" height="40" viewBox="0 0 120 60">
-		<a href="/"><text fill={statusColor} x="55" y="50">OMS</text></a>
+		<text fill={statusColor} x="55" y="50">OMS</text>
 	</svg>
 {:else}
 	<svg width="120" height="60" viewBox="0 0 200 60">
@@ -34,10 +34,6 @@
 {/if}
 
 <style>
-	a:hover {
-		text-decoration: none;
-	}
-
 	text {
 		font-family: 'Kanit', sans-serif;
 		font-size: 3.5rem;

@@ -1,17 +1,17 @@
 <script lang="ts">
 	import type { Payment } from '$lib/types/order';
-	import StatusBadge from './StatusBadge.svelte';
+	import { capitalize } from '$lib/utils/formatting';
 
 	let { payment }: { payment: Payment } = $props();
 </script>
 
-<table class="w-full divide-y divide-gray-600">
+<table class="w-full divide-y divide-gray-600 border-collapse bg-white shadow-sm">
 	<thead>
 	</thead>
 	<tbody class="divide-y divide-gray-200 bg-gray-100/50">
 			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Payment</td>
-				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700"><StatusBadge status={payment.status} /></td>
+				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 text-right">{capitalize(payment.status)}</td>
 			</tr>
 			<tr>
 				<td class="px-3 py-1.5 text-sm whitespace-nowrap text-gray-700 w-full">Subtotal</td>

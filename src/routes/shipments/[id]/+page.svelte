@@ -36,7 +36,7 @@
 </script>
 
 <Card>
-	<div class="w-full">
+	<div class="w-full flex flex-col gap-2">
 		<div class="flex flex-col md:flex-row items-center justify-between gap-2 w-full">
 			<Heading>{shipment.id}</Heading>
 			<ShipmentProgress {status} />

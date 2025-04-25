@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import Breadcrumb from '$lib/components/Breadcrumb.svelte';
+	import { capitalize } from '$lib/utils/formatting';
 	import './app.css';
 
 	let { children } = $props();
@@ -10,9 +11,8 @@
 	const paths = $derived(page.url.pathname.split('/').filter(Boolean));
 </script>
 
-
 <svelte:head>
-	<title>OMS | {title}</title>
+	<title>OMS | {capitalize(title)}</title>
 	<meta name="description" content="OMS App" />
 </svelte:head>
 

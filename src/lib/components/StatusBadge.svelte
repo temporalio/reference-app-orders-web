@@ -1,17 +1,8 @@
 <script lang="ts">
+	import { spaceBetweenCapitalLetters } from "$lib/utils/formatting";
+
 	let { status } = $props();
 
-	const capitalize = (word?: string): string => {
-		if (!word) return '';
-		return word[0].toUpperCase() + word.slice(1);
-	};
-
-	const spaceBetweenCapitalLetters = (word: string): string => {
-		return capitalize(word)
-			.replace(/([A-Z])/g, ' $1')
-			.trim()
-			.toUpperCase();
-	};
 
 	const formattedStatus =
 		$derived(status === 'customerActionRequired'
@@ -19,16 +10,30 @@
 			: spaceBetweenCapitalLetters(status))
 </script>
 
-<div class="border-2 text-black rounded-md px-4 max-w-fit py-0.5 mx-auto bg-green-300 text-sm whitespace-nowrap font-bold {status}">
+<div class="rounded-md text-white px-4 max-w-fit py-1 mx-auto bg-gray-400 text-sm whitespace-nowrap font-bold {status}">
 	{formattedStatus}
 </div>
 
-<style>
-	.customerActionRequired {
-		background-color: lightcoral;
+<style lang="postcss">
+	@reference "tailwindcss";
+
+	.booked {
+		@apply bg-blue-400;
 	}
 
-	.failed {
-		background-color: lightcoral;
+	.dispatched {
+		@apply bg-teal-400;
+	}
+
+	.customerActionRequired {
+		@apply bg-rose-400;
+	}
+
+	.completed, .delivered {
+		@apply bg-green-500;
+	}
+
+	.failed, .timedOut, .cancelled {
+		@apply bg-rose-400;
 	}
 </style>

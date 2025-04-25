@@ -7,8 +7,9 @@
 	let { order }: { order: Order } = $props();
 	let fulfillments: Fulfillment[] = $derived(order?.fulfillments || []);
 
-	const getStatus = (fulfillment: Fulfillment) => {
-		if (!fulfillment.shipment) return fulfillment.status;
+	const getStatus = (fulfillment: Fulfillment): string => {
+		console.log('Fulfillment:', fulfillment);
+		if (!fulfillment.shipment) return fulfillment.status || 'unavailable';
 		return fulfillment.shipment.status;
 	};
 </script>
@@ -17,13 +18,13 @@
 	{#each fulfillments as fulfillment}
 		<div class="container">
 			<div class="flex flex-col md:flex-row items-end justify-between w-full border-b-2 mb-1">
-				<p>
+				<p class="text-lg text-gray-500/90 font-semibold italic">
 					{#if fulfillment?.location}
-						<i>{fulfillment.location}</i>
+						{fulfillment.location}
 					{:else if fulfillment?.status == "cancelled"}
-						<strong>Unavailable</strong>
+						Unavailable
 					{:else}
-						<strong>Action Required</strong>
+						Action Required
 					{/if}
 				</p>
 				<ShipmentProgress status={getStatus(fulfillment)} />

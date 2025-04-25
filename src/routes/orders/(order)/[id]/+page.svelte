@@ -3,11 +3,11 @@
 	import { goto, invalidate } from '$app/navigation';
 	import Fulfillment from '$lib/components/Fullfillment.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import Logo from '$lib/components/Logo.svelte';
 	import { page } from '$app/state';
 	import type { Action } from '$lib/types/order';
 	import Card from '$lib/components/Card.svelte';
 	import Heading from '$lib/components/Heading.svelte';
+	import StatusBadge from '$lib/components/StatusBadge.svelte';
 
 	let { data } = $props();
 	let order = $derived(data.order);
@@ -49,19 +49,20 @@
 
 <Card>
 	<div class="w-full flex flex-col gap-2">
-		<Heading>{id}</Heading>
+		<div class="flex flex-row items-center gap-2 w-full">
+			<StatusBadge status={order.status} />
+			<Heading>{order.id}</Heading>
+		</div>
 		<Fulfillment {order} />	
 	</div>
 	{#snippet actionButtons()}
 		{#if actionRequired}
 			<div class="flex items-center justify-end gap-2">
-				{#if loading}
-					<Logo loading loadingText="Processing" />
-				{:else}
-					<Button onClick={() => sendAction('amend')}>Amend</Button>
-					<Button onClick={() => sendAction('cancel')}>Cancel</Button>
-				{/if}
+				<Button {loading} onClick={() => sendAction('amend')}>Amend</Button>
+				<Button {loading} onClick={() => sendAction('cancel')}>Cancel</Button>
 			</div>
+		{:else}
+			<p class="px-4 py-2 text-sm font-light"><i>Customer {order.customerId}</i></p>
 		{/if}
 	{/snippet}
 </Card>

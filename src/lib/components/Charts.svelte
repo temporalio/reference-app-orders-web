@@ -2,6 +2,16 @@
 	import { onMount, onDestroy } from 'svelte';
 	import Card from './Card.svelte';
 
+	import Chart from 'chart.js/auto';
+
+	let completions: HTMLCanvasElement;
+	let workerCount: HTMLCanvasElement;
+	let backlog: HTMLCanvasElement;
+
+	let completionsChart: Chart;
+	let workerCountChart: Chart;
+	let backlogChart: Chart;
+
 	let workerCountChartData = {
 		labels: [] as string[],
 		datasets: [
@@ -91,9 +101,25 @@
 		workerCountChartData = workerCountChartData
 		completeChartData = completeChartData
 		backlogChartData = backlogChartData
+
+		completionsChart.update();
+		workerCountChart.update();
+		backlogChart.update();
 	}
 
 	onMount(() => {
+		completionsChart= new Chart(completions, {
+				type: 'line',
+				data: completeChartData,
+			});
+			workerCountChart = new Chart(workerCount, {
+				type: 'line',
+				data: workerCountChartData,
+			});
+			backlogChart = new Chart(backlog, {
+				type: 'line',
+				data: backlogChartData,
+			});
 			updateChartData();
 			refreshInterval = setInterval(updateChartData, 10000);
 	});
@@ -106,58 +132,16 @@
 <Card>
 	<div class="w-full p-4 flex flex-col gap-4">
 		<h3 class="text-xl font-bold">Completions</h3>
-		<div class="w-full h-[300px]">
-			<!-- <Line 
-					data={completeChartData}
-					options={{
-							responsive: true,
-							maintainAspectRatio: false,
-							animation: false,
-							scales: {
-								y: {
-									beginAtZero: true
-								}
-							}
-					}}
-				/> -->
-			</div>
+		<div class="w-full"><canvas bind:this={completions}></canvas></div>
 	</div>
 </Card>
 <Card>
-  <div class="w-full p-4 flex flex-col gap-4">
-			<h3 class="text-xl font-bold">Workers</h3>
-			<div class="w-full h-[300px]">
-				<!-- <Line
-						data={workerCountChartData}
-						options={{
-								responsive: true,
-								maintainAspectRatio: false,
-								animation: false,
-								scales: {
-									y: {
-										beginAtZero: true
-									}
-								}
-						}}
-				/> -->
-			</div>
-		</div>	
-		<div class="w-full p-4 flex flex-col gap-4">
-			<h3 class="text-xl font-bold">Backlog</h3>
-			<div class="w-full h-[300px]">
-				<!-- <Line 
-				data={backlogChartData}
-				options={{
-						responsive: true,
-						maintainAspectRatio: false,
-						animation: false,
-						scales: {
-							y: {
-								beginAtZero: true
-							}
-						}
-				}}
-			/> -->
-		</div>
+	<div class="w-full p-4 flex flex-col gap-4">
+		<h3 class="text-xl font-bold">Workers</h3>
+		<div class="w-full"><canvas bind:this={workerCount}></canvas></div>
+	</div>	
+	<div class="w-full p-4 flex flex-col gap-4">
+		<h3 class="text-xl font-bold">Backlog</h3>
+		<div class="w-full"><canvas bind:this={backlog}></canvas></div>
 	</div>
 </Card>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { spaceBetweenCapitalLetters } from "$lib/utils/formatting";
 
-	let { status } = $props();
+	let { status }: { status: string } = $props();
 
 
 	const formattedStatus =

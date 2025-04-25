@@ -8,7 +8,6 @@
 	let fulfillments: Fulfillment[] = $derived(order?.fulfillments || []);
 
 	const getStatus = (fulfillment: Fulfillment): string => {
-		console.log('Fulfillment:', fulfillment);
 		if (!fulfillment.shipment) return fulfillment.status || 'unavailable';
 		return fulfillment.shipment.status;
 	};

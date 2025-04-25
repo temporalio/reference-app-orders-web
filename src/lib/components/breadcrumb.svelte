@@ -2,7 +2,7 @@
 	import { capitalize } from "$lib/utils/formatting";
 	import Logo from "./Logo.svelte";
 
-  let { paths } = $props();
+  let { paths }: { paths: string[] } = $props();
 </script>
 
 <nav class="flex" aria-label="Breadcrumb">

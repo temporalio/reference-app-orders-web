@@ -11,6 +11,22 @@
     data: TableData;
   }
   let { title, description, action, columns, data }: Props = $props();
+  const pageSize = 50
+
+  let page = $state(1);
+  const pageData = $derived(data.slice((page - 1) * pageSize, page * pageSize));
+
+  const nextPage = () => {
+    if (page * pageSize < data.length) {
+      page += 1;
+    }
+  };
+
+  const prevPage = () => {
+    if (page > 1) {
+      page -= 1;
+    }
+  };
 </script>
 
 
@@ -39,7 +55,7 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 bg-white">
-              {#each data as row}
+              {#each pageData as row}
                 <tr>
                   {#each columns as column, index}
                     <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-700" class:w-full={index === 0}>
@@ -57,9 +73,22 @@
                     </td>
                   {/each}
                 </tr>
+              {:else}
+                <tr>
+                  <td colspan={columns.length} class="px-3 py-4 text-sm text-gray-500 text-center">No data available</td>
+                </tr>
               {/each}
             </tbody>
           </table>
+          <div class="flex items-center justify-between bg-gray-50 p-2">
+            <p class="text-xs text-gray-700">
+              {(page * pageSize - pageSize + 1).toLocaleString()} - {(page * pageSize).toLocaleString()} of {data.length.toLocaleString()}
+            </p>
+          <div class="flex flex-1 gap-2 justify-end">
+            <button onclick={prevPage} class="relative cursor-pointer inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-offset-0">Previous</button>
+            <button onclick={nextPage} class="relative cursor-pointer inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-offset-0">Next</button>
+          </div>
+          </div>
         </div>
       </div>
     </div>

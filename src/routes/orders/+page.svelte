@@ -34,7 +34,6 @@
 	]
 </script>
 
-
 <TableWithHeader
 	title="Orders"
 	{columns}

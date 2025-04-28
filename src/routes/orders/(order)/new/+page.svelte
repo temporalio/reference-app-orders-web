@@ -1,120 +1,62 @@
 <script lang="ts">
+	import { generateOrders, type Order, type OrderItem } from '$lib/types/order';
+	import Button from '$lib/components/Button.svelte';
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import OrderDetails from '$lib/components/order-details.svelte';
-	import { generateOrders, order, type Order } from '$lib/types/order';
-	import Logo from '$lib/components/logo.svelte';
-
-	const onItemClick = async (order: Order) => {
-		if (order.id === $order?.id) {
-			$order = undefined;
-		} else {
-			$order = order;
-		}
-	};
-
-	const onSubmit = async () => {
-		if ($order) {
-			loading = true;
-			await fetch('/api/order', { method: 'POST', body: JSON.stringify({ order: $order }) });
-			setTimeout(() => {
-				goto(`/orders/${$order.id}`, { invalidateAll: true });
-				$order = undefined;
-			}, 1000);
-		}
-	};
+	import ItemDetails from '$lib/components/ItemDetails.svelte';
+	import Card from '$lib/components/Card.svelte';
+	import Heading from '$lib/components/Heading.svelte';
 
 	const orders = generateOrders(20);
+	let order: Order = $state(orders[0]);
+	let loading = $state(false);
 
-	let loading = false;
+	const onItemClick = async (item: Order) => {
+		order = item;
+	};
 </script>
 
-<svelte:head>
-	<title>OMS</title>
-	<meta name="description" content="OMS App" />
-</svelte:head>
+{#snippet orderDetails(item: OrderItem)}
+	<Card>
+		<ItemDetails items={[item]} />
+		{#snippet actionButtons()}
+			<div class="text-xs text-gray-600/80 px-4">{item.description}</div>
+		{/snippet}
+	</Card>
+{/snippet}
 
-<section>
-	{#if loading}
-		<div class="container loading"><Logo loading /></div>
-	{:else}
-		<div class="container">
-			<div class="list">
-				{#each orders as _order, index}
-					<button
-						class="item"
-						class:active={_order.id === $order?.id}
-						on:click={() => onItemClick(_order)}
-					>
-						<div class="name">Order {index + 1}</div>
-					</button>
-				{/each}
-			</div>
-			<OrderDetails order={$order} />
-		</div>
-		<div class="container submit">
-			<button class="submit-button" disabled={!$order} on:click={onSubmit}>Submit</button>
-		</div>
-	{/if}
-</section>
-
-<style>
-	.container {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		gap: 2rem;
-		width: 100%;
-	}
-
-	.loading {
-		align-items: center;
-	}
-
-	.submit {
-		margin: 1rem 0;
-		justify-content: end;
-	}
-
-	.list {
-		background-color: white;
-		width: 20vw;
-		height: 55vh;
-		overflow: auto;
-		border-radius: 0.25rem;
-	}
-
-	@media (max-width: 640px) {
-		.container {
-			flex-direction: column;
-		}
-
-		.list {
-			width: 100%;
-			height: 15rem;
-		}
-	}
-
-	.item {
-		height: 2.5rem;
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		cursor: pointer;
-		border-radius: 0;
-		border: none;
-		border-bottom: 2px solid #ccc;
-		background-color: white;
-		color: black;
-	}
-
-	.active {
-		background-color: var(--color-theme-2);
-		color: white;
-	}
-
-	.name {
-		font-weight: bold;
-	}
-</style>
+<Heading>New Order</Heading>
+<div class="flex flex-col gap-2">
+	<div class="flex flex-wrap gap-0.5">
+		{#each orders as item, index}
+			<button
+				onclick={() => onItemClick(item)}
+				type="button"
+				class="relative cursor-pointer inline-flex items-center {order.id === item.id
+					? 'bg-blue-500 hover:bg-blue-600 text-white'
+					: 'bg-white hover:bg-gray-50'} px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-200 ring-inset focus:z-10"
+				>Package {index + 1}</button
+			>
+		{/each}
+	</div>
+	<form
+		class="flex w-full flex-col gap-2 items-end"
+		method="POST"
+		use:enhance={() => {
+			loading = true;
+			return async ({ result }) => {
+				if (result.type === 'redirect') {
+					goto(result.location);
+				} else {
+					loading = false;
+				}
+			};
+		}}
+	>
+		{#each order.items as item}
+			{@render orderDetails(item)}
+		{/each}
+		<input type="hidden" name="order" value={JSON.stringify(order)} />
+		<Button type="submit" {loading} disabled={!order}>Submit</Button>
+	</form>
+</div>

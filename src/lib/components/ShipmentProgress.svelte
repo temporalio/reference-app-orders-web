@@ -1,25 +1,28 @@
 <script lang="ts">
-	export let status = '';
+	let { status }: { status: string } = $props();
 
 	const inactiveStatuses = ['pending', 'unavailable', 'cancelled', 'failed'];
 	const activeStatuses = ['booked', 'dispatched', 'delivered'];
 
-	$: finalStatus = status || 'pending';
-	$: inactive = inactiveStatuses.includes(finalStatus);
-	$: statuses = inactive ? [finalStatus] : activeStatuses;
-	$: currentIndex = inactive ? 0 : activeStatuses.indexOf(finalStatus);
+	const finalStatus = $derived(status || 'pending');
+	const inactive = $derived(inactiveStatuses.includes(finalStatus));
+	const statuses = $derived(inactive ? [finalStatus] : activeStatuses);
+	const currentIndex = $derived(inactive ? 0 : activeStatuses.indexOf(finalStatus));
 </script>
 
-<ul>
+<ul class="list-style-none inline-flex px-4 relative overflow-hidden rounded-lg my-2">
 	{#each statuses as s, index}
 		<li
-			class:active={!inactive && currentIndex === index}
-			class:completed={!inactive && currentIndex > index}
+			class:active={!inactive && currentIndex === index - 1}
+			class:completed={!inactive && currentIndex >= index}
 			class:incomplete={!inactive && currentIndex < index}
 			class:failed={s === 'failed'}
 			class:pending={s === 'pending'}
 			class:unavailable={s === 'unavailable'}
 			class:cancelled={s === 'cancelled'}
+			class:booked={s === 'booked'}
+			class:dispatched={s === 'dispatched'}
+			class:delivered={s === 'delivered'}
 		>
 			{s.toUpperCase()}
 		</li>
@@ -27,33 +30,25 @@
 </ul>
 
 <style lang="postcss">
-	ul {
-		list-style: none;
-		display: inline-flex;
-		@apply px-4 relative overflow-hidden rounded-full border-[3px] border-black my-2;
-	}
-
+	@reference "tailwindcss";
 	li {
-		@apply px-4 py-2 text-sm font-bold relative;
-		background: transparent;
-		z-index: 1;
+		@apply px-4 py-1 text-sm font-bold relative z-1;
 	}
 
 	li::before {
 		content: '';
 		position: absolute;
 		inset: 0;
-		border-left: 3px solid black;
+		border-left: 2px solid black;
 		transform: skew(30deg);
 		z-index: -1;
 	}
 
 	li.completed::before {
-		background: forestgreen;
+		@apply bg-green-500;
 	}
 
 	li.active::before {
-		background: lightgreen;
 		animation-name: color;
 		animation-duration: 2s;
 		animation-iteration-count: infinite;
@@ -63,10 +58,10 @@
 
 	@keyframes color {
 		from {
-			background-color: forestgreen;
+			background-color: lightgoldenrodyellow;
 		}
 		to {
-			background-color: lightgreen;
+			background-color: #b9f8cf;
 		}
 	}
 	li.pending::before {
@@ -80,7 +75,7 @@
 
 	li.cancelled::before,
 	li.failed::before {
-		background: lightcoral;
+		@apply bg-rose-400;
 	}
 
 	li:first-child {

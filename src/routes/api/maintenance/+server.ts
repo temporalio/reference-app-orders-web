@@ -4,7 +4,7 @@ import { env } from '$env/dynamic/private';
 export const POST: RequestHandler = async () => {
 	try {
 		const response = await fetch(`${env.FRAUD_API_URL}/maintenance`, {
-			method: 'POST',
+			method: 'POST'
 		});
 		return json({ status: 'ok', body: response });
 	} catch (e) {

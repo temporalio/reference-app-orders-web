@@ -1,30 +1,24 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import ShipmentDetails from '$lib/components/shipment-details.svelte';
+	import Card from '$lib/components/Card.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Heading from '$lib/components/Heading.svelte';
+	import ItemDetails from '$lib/components/ItemDetails.svelte';
+	import ShipmentProgress from '$lib/components/ShipmentProgress.svelte';
 	import type { Shipment } from '$lib/types/order';
 
-	$: ({ shipment } = $page.data);
-
-	$: status = shipment?.status;
-
+	let { data } = $props();
+	let shipment: Shipment = $derived(data.shipment);
+	let status = $derived(shipment?.status);
 	let broadcaster: BroadcastChannel;
-	$: {
-		if (shipment?.id) {
-			broadcaster = new BroadcastChannel(`shipment-${shipment.id}`);
 
-			//note: the customer order page is polling for order status from the
-			//workflow itself since this courier shipping page is not the only
-			//source of workflow state changes
-			
-			//however to avoid polling on this this courier shipping page if
-			//multiple browser windows are open to the same shipping page we'd
-			//like those to be in sync, so will listen for events from a
-			//different browser window opened to the same shipping page
+	$effect(() => {
+		if (shipment?.id && !broadcaster) {
+			broadcaster = new BroadcastChannel(`shipment-${shipment.id}`);
 			broadcaster?.addEventListener('message', (event) => {
 				status = event.data;
 			});
 		}
-	}
+	});
 
 	const dispatchShipment = async (shipment: Shipment) => {
 		const signal = { name: 'ShipmentUpdate', status: 'dispatched' };
@@ -41,41 +35,20 @@
 	};
 </script>
 
-<svelte:head>
-	<title>OMS</title>
-	<meta name="description" content="OMS App" />
-</svelte:head>
-
-<div class="container">
-	<h1>{shipment.id}</h1>
-	<ShipmentDetails {shipment} {status} />
-	<div class="action-btns">
-		<button
-			class="submit"
-			disabled={status !== 'booked'}
-			on:click={() => dispatchShipment(shipment)}>Dispatch</button
-		><button
-			class="submit"
-			disabled={status !== 'dispatched'}
-			on:click={() => deliverShipment(shipment)}>Deliver</button
-		>
+<Card>
+	<div class="w-full flex flex-col gap-2">
+		<div class="flex flex-col md:flex-row items-center justify-between gap-2 w-full">
+			<Heading>{shipment.id}</Heading>
+			<ShipmentProgress {status} />
+		</div>
+		<ItemDetails items={shipment.items} />
 	</div>
-</div>
-
-<style>
-	.container {
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-		gap: 2rem;
-		background-color: white;
-		padding: 2rem;
-		border-radius: 0.5rem;
-	}
-	.action-btns {
-		display: flex;
-		justify-content: end;
-		gap: 0.5rem;
-		width: 100%;
-	}
-</style>
+	{#snippet actionButtons()}
+		<Button disabled={status !== 'booked'} onClick={() => dispatchShipment(shipment)}>
+			Dispatch
+		</Button>
+		<Button disabled={status !== 'dispatched'} onClick={() => deliverShipment(shipment)}>
+			Deliver
+		</Button>
+	{/snippet}
+</Card>

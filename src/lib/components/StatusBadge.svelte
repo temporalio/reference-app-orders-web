@@ -1,16 +1,18 @@
 <script lang="ts">
-	import { spaceBetweenCapitalLetters } from "$lib/utils/formatting";
+	import { spaceBetweenCapitalLetters } from '$lib/utils/formatting';
 
 	let { status }: { status: string } = $props();
 
-
-	const formattedStatus =
-		$derived(status === 'customerActionRequired'
+	const formattedStatus = $derived(
+		status === 'customerActionRequired'
 			? spaceBetweenCapitalLetters('actionRequired')
-			: spaceBetweenCapitalLetters(status))
+			: spaceBetweenCapitalLetters(status)
+	);
 </script>
 
-<div class="rounded-md text-white px-4 max-w-fit py-1 mx-auto bg-gray-400 text-sm whitespace-nowrap font-bold {status}">
+<div
+	class="rounded-md text-white px-4 max-w-fit py-1 mx-auto bg-gray-400 text-sm whitespace-nowrap font-bold {status}"
+>
 	{formattedStatus}
 </div>
 
@@ -29,11 +31,14 @@
 		@apply bg-rose-400;
 	}
 
-	.completed, .delivered {
+	.completed,
+	.delivered {
 		@apply bg-green-500;
 	}
 
-	.failed, .timedOut, .cancelled {
+	.failed,
+	.timedOut,
+	.cancelled {
 		@apply bg-rose-400;
 	}
 </style>

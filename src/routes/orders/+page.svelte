@@ -8,20 +8,21 @@
 	let { data } = $props();
 	let orders = $derived(data.orders);
 
-	const columns = [{
+	const columns = [
+		{
 			title: 'Order ID',
 			key: 'id',
 			formatter: (value: string) => ({
 				type: Link,
 				props: { value, href: `/orders/${value}` }
-			}),
+			})
 		},
 		{
 			title: 'Date & Time',
 			key: 'receivedAt',
 			formatter: (value: string) => {
 				return `${new Date(value).toLocaleDateString()} ${new Date(value).toLocaleTimeString()}`;
-			},
+			}
 		},
 		{
 			title: 'Status',
@@ -29,19 +30,13 @@
 			formatter: (value: string) => ({
 				type: StatusBadge,
 				props: { status: value }
-			}),
+			})
 		}
-	]
+	];
 </script>
 
-<TableWithHeader
-	title="Orders"
-	{columns}
-	data={orders}
->
- {#snippet action()}
-		<Button onClick={() => goto('/orders/new')}>
-			New Order
-		</Button>
- {/snippet}
+<TableWithHeader title="Orders" {columns} data={orders}>
+	{#snippet action()}
+		<Button onClick={() => goto('/orders/new')}>New Order</Button>
+	{/snippet}
 </TableWithHeader>

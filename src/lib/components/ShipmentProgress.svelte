@@ -5,8 +5,8 @@
 	const activeStatuses = ['booked', 'dispatched', 'delivered'];
 
 	const finalStatus = $derived(status || 'pending');
-	const inactive = $derived(inactiveStatuses.includes(finalStatus))
-	const statuses = $derived(inactive ? [finalStatus] : activeStatuses)
+	const inactive = $derived(inactiveStatuses.includes(finalStatus));
+	const statuses = $derived(inactive ? [finalStatus] : activeStatuses);
 	const currentIndex = $derived(inactive ? 0 : activeStatuses.indexOf(finalStatus));
 </script>
 
@@ -61,7 +61,7 @@
 			background-color: lightgoldenrodyellow;
 		}
 		to {
-			background-color: #B9F8CF;
+			background-color: #b9f8cf;
 		}
 	}
 	li.pending::before {

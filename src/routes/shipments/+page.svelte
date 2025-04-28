@@ -5,14 +5,15 @@
 
 	let { data } = $props();
 	let shipments = $derived(data.shipments);
-	
-	const columns = [{
-		title: 'Shipment ID',
-		key: 'id',
-		formatter: (value: string) => ({
+
+	const columns = [
+		{
+			title: 'Shipment ID',
+			key: 'id',
+			formatter: (value: string) => ({
 				type: Link,
 				props: { value, href: `/shipments/${value}` }
-			}),
+			})
 		},
 		{
 			title: 'Status',
@@ -20,13 +21,9 @@
 			formatter: (value: string) => ({
 				type: StatusBadge,
 				props: { status: value }
-			}),
+			})
 		}
-	]
+	];
 </script>
 
-<TableWithHeader
-	title="Shipments"
-	{columns}
-	data={shipments}
-/>
+<TableWithHeader title="Shipments" {columns} data={shipments} />

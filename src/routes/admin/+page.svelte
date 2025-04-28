@@ -28,24 +28,36 @@
 <Card>
 	<div class="w-full flex flex-col gap-4">
 		<h3 class="text-xl font-bold">Fraud</h3>
-			<p>
-				Fraud Limit: <strong
-					>{limit
-						? (limit / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-						: 'Unlimited'}</strong
-				>
-			</p>
-			<p>
-				Maintenance Mode: <strong>{maintenanceMode ? 'Enabled' : 'Disabled'}</strong>
-			</p>
-			<div class="flex items-center gap-2">
-				<div class="flex items-center rounded-md bg-white px-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-					<div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">$</div>
-					<input bind:value={newLimit} type="number" name="price" id="price" class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="0.00" aria-describedby="price-currency">
-					<div id="price-currency" class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">USD</div>
+		<p>
+			Fraud Limit: <strong
+				>{limit
+					? (limit / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+					: 'Unlimited'}</strong
+			>
+		</p>
+		<p>
+			Maintenance Mode: <strong>{maintenanceMode ? 'Enabled' : 'Disabled'}</strong>
+		</p>
+		<div class="flex items-center gap-2">
+			<div
+				class="flex items-center rounded-md bg-white px-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+			>
+				<div class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">$</div>
+				<input
+					bind:value={newLimit}
+					type="number"
+					name="price"
+					id="price"
+					class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+					placeholder="0.00"
+					aria-describedby="price-currency"
+				/>
+				<div id="price-currency" class="shrink-0 text-base text-gray-500 select-none sm:text-sm/6">
+					USD
 				</div>
-				<Button onClick={onLimit}>Set Limit</Button>
 			</div>
+			<Button onClick={onLimit}>Set Limit</Button>
+		</div>
 	</div>
 	{#snippet actionButtons()}
 		<Button onClick={onReset}>Reset</Button>

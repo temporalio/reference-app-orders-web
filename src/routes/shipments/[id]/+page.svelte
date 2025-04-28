@@ -13,7 +13,7 @@
 
 	$effect(() => {
 		if (shipment?.id && !broadcaster) {
-			broadcaster = new BroadcastChannel(`shipment-${shipment.id}`);			
+			broadcaster = new BroadcastChannel(`shipment-${shipment.id}`);
 			broadcaster?.addEventListener('message', (event) => {
 				status = event.data;
 			});
@@ -44,16 +44,11 @@
 		<ItemDetails items={shipment.items} />
 	</div>
 	{#snippet actionButtons()}
-		<Button
-			disabled={status !== 'booked'}
-			onClick={() => dispatchShipment(shipment)}>
+		<Button disabled={status !== 'booked'} onClick={() => dispatchShipment(shipment)}>
 			Dispatch
 		</Button>
-		<Button
-			disabled={status !== 'dispatched'}
-			onClick={() => deliverShipment(shipment)}>
+		<Button disabled={status !== 'dispatched'} onClick={() => deliverShipment(shipment)}>
 			Deliver
 		</Button>
 	{/snippet}
 </Card>
-

@@ -2,9 +2,9 @@
 	import { page } from '$app/state';
 	import { type Order } from '$lib/types/order';
 
-	const actionRequired = $derived(page.data?.orders?.some(
-		(o: Order) => o?.status === 'customerActionRequired'
-	))
+	const actionRequired = $derived(
+		page.data?.orders?.some((o: Order) => o?.status === 'customerActionRequired')
+	);
 	const statusColor = $derived(actionRequired ? '#EF8080' : '#366ee9');
 </script>
 

@@ -6,7 +6,7 @@
 
 	let { children } = $props();
 
-	let title = $derived(page.url.pathname.slice(1))
+	let title = $derived(page.url.pathname.slice(1));
 
 	const paths = $derived(page.url.pathname.split('/').filter(Boolean));
 </script>

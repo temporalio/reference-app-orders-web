@@ -20,7 +20,7 @@
 				<p class="text-lg text-gray-500/90 font-semibold italic">
 					{#if fulfillment?.location}
 						{fulfillment.location}
-					{:else if fulfillment?.status == "cancelled"}
+					{:else if fulfillment?.status == 'cancelled'}
 						Unavailable
 					{:else}
 						Action Required
@@ -28,7 +28,9 @@
 				</p>
 				<ShipmentProgress status={getStatus(fulfillment)} />
 			</div>
-			<div class="w-full flex flex-col md:flex-row items-start justify-between gap-2 my-4 items-center">
+			<div
+				class="w-full flex flex-col md:flex-row items-start justify-between gap-2 my-4 items-center"
+			>
 				<ItemDetails items={fulfillment.items} />
 				{#if fulfillment.payment}
 					<Payment payment={fulfillment.payment} />

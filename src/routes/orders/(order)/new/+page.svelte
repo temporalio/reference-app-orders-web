@@ -29,23 +29,30 @@
 <div class="flex flex-col gap-2">
 	<div class="flex flex-wrap gap-0.5">
 		{#each orders as item, index}
-			<button onclick={() => onItemClick(item)} type="button" class="relative cursor-pointer inline-flex items-center {order.id === item.id ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-white hover:bg-gray-50'} px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-200 ring-inset focus:z-10">Package {index + 1}</button>
+			<button
+				onclick={() => onItemClick(item)}
+				type="button"
+				class="relative cursor-pointer inline-flex items-center {order.id === item.id
+					? 'bg-blue-500 hover:bg-blue-600 text-white'
+					: 'bg-white hover:bg-gray-50'} px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-200 ring-inset focus:z-10"
+				>Package {index + 1}</button
+			>
 		{/each}
 	</div>
-	<form 
+	<form
 		class="flex w-full flex-col gap-2 items-end"
-		method="POST" 
+		method="POST"
 		use:enhance={() => {
 			loading = true;
 			return async ({ result }) => {
 				if (result.type === 'redirect') {
 					goto(result.location);
 				} else {
-					loading = false;;
+					loading = false;
 				}
-			}
+			};
 		}}
-		>
+	>
 		{#each order.items as item}
 			{@render orderDetails(item)}
 		{/each}

@@ -53,7 +53,7 @@
 			<StatusBadge status={order.status} />
 			<Heading>{order.id}</Heading>
 		</div>
-		<Fulfillment {order} />	
+		<Fulfillment {order} />
 	</div>
 	{#snippet actionButtons()}
 		{#if actionRequired}
